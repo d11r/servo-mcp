@@ -1,36 +1,151 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Servo
+
+A desktop MCP server for AI agents. Gives Claude Code the tools to see your screen, click buttons, type text, and verify its work on macOS and Windows.
+
+**Open source. 100% local. No telemetry.**
+
+## What is Servo?
+
+Servo is an [MCP (Model Context Protocol)](https://modelcontextprotocol.io) server that provides desktop automation tools. When connected to Claude Code, it enables AI to:
+
+- Take screenshots to see your desktop
+- Click buttons and interact with UI elements
+- Type text and use keyboard shortcuts
+- Scroll, navigate, and control applications
+- Verify that code changes actually work
+
+## Why a Desktop App?
+
+macOS and Windows require explicit user permission for screen recording and accessibility features. A proper app bundle appears in System Preferences, allowing users to grant these permissions elegantly.
+
+## Repository Structure
+
+This is a **pnpm monorepo** containing:
+
+```
+getservo/
+├── apps/
+│   ├── web/          # Marketing website (getservo.app) - Next.js
+│   └── desktop/      # Electron desktop app with MCP server
+├── packages/
+│   └── shared/       # Shared types and constants
+├── pnpm-workspace.yaml
+└── turbo.json
+```
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 20+
+- pnpm 9+
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Clone the repository
+git clone https://github.com/d11r/servo.git
+cd servo
+
+# Install dependencies
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Run all apps in dev mode
+pnpm dev
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Run website only (http://localhost:3000)
+pnpm dev:web
 
-## Learn More
+# Run desktop app only
+pnpm dev:desktop
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# Build all
+pnpm build
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Build website
+pnpm build:web
 
-## Deploy on Vercel
+# Build desktop app for current platform
+pnpm build:desktop
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## MCP Tools
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Tool | Description |
+|------|-------------|
+| `screenshot` | Capture screen or window (returns base64 image) |
+| `click` | Click at x,y coordinates (left/right/double) |
+| `type_text` | Type text at cursor position |
+| `key_press` | Press keyboard shortcut (e.g., Cmd+S) |
+| `scroll` | Scroll up/down/left/right |
+| `move_mouse` | Move cursor to x,y |
+| `get_mouse_position` | Get current cursor position |
+| `focus_app` | Bring application to foreground |
+| `open_app` | Launch an application |
+| `list_windows` | List all open windows |
+| `wait` | Wait for specified milliseconds |
+
+## Claude Code Configuration
+
+Add to your Claude Code settings (`~/.claude.json`):
+
+```json
+{
+  "mcpServers": {
+    "servo": {
+      "command": "/Applications/Servo.app/Contents/MacOS/Servo",
+      "args": ["--mcp"]
+    }
+  }
+}
+```
+
+On Windows:
+```json
+{
+  "mcpServers": {
+    "servo": {
+      "command": "C:\\Program Files\\Servo\\Servo.exe",
+      "args": ["--mcp"]
+    }
+  }
+}
+```
+
+## Permissions
+
+### macOS
+
+Servo requires two permissions:
+
+1. **Screen Recording** - For taking screenshots
+2. **Accessibility** - For mouse clicks, keyboard input, and scrolling
+
+The app will guide you through granting these permissions on first launch.
+
+### Windows
+
+Run the app as Administrator for full functionality.
+
+## Tech Stack
+
+- **Desktop App**: Electron + electron-vite
+- **Website**: Next.js 15 + React 19 + Tailwind CSS 4
+- **MCP SDK**: @modelcontextprotocol/sdk
+- **Automation**: Native APIs (screencapture, Quartz, AppleScript on macOS; PowerShell, Win32 on Windows)
+
+## License
+
+MIT License - see [LICENSE](LICENSE) for details.
+
+## Author
+
+Created by [Dragos Strugar](https://dragosstrugar.com) ([@d11r](https://github.com/d11r))

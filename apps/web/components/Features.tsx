@@ -2,22 +2,22 @@ const features = [
   {
     title: "See Your Screen",
     description:
-      "Take screenshots of your entire screen or specific windows to let AI understand what you're working on.",
+      "Provides screenshot tools so AI can see your entire desktop or specific windows.",
   },
   {
     title: "Click & Type",
     description:
-      "Click buttons, type text, and press keyboard shortcuts. Let AI interact with any application.",
+      "Enables mouse clicks, text input, and keyboard shortcuts in any desktop application on macOS or Windows.",
   },
   {
     title: "Control Apps",
     description:
-      "Launch applications, switch windows, and navigate your desktop programmatically.",
+      "Tools to launch desktop applications, switch windows, and navigate your system programmatically.",
   },
   {
     title: "Verify Work",
     description:
-      "Let AI agents confirm their changes worked correctly by seeing the results on screen.",
+      "Gives AI agents the ability to confirm their changes worked by seeing actual results on your desktop.",
   },
   {
     title: "100% Local",
@@ -36,11 +36,11 @@ export function Features() {
     <section className="px-6 py-16">
       <div className="mx-auto max-w-5xl">
         <h2 className="text-center text-2xl font-bold tracking-tight sm:text-3xl">
-          Everything you need
+          Tools for verification
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-center text-base text-muted">
-          Servo gives AI agents complete visibility and control over your
-          desktop environment.
+          Servo provides MCP tools that give AI agents the ability to see and interact with
+          your desktop, so they can verify their work actually works.
         </p>
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature) => (

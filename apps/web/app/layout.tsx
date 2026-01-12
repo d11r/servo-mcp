@@ -14,19 +14,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Servo - Give AI the ability to see and control your desktop",
+  title: "Servo - Desktop MCP Server for AI Agents | macOS & Windows",
   description:
-    "Servo is an MCP server that lets Claude Code take screenshots, click buttons, type text, and verify its work. 100% local, open source, no telemetry.",
+    "Servo is a desktop MCP server that gives Claude Code tools to take screenshots, click buttons, type text, and verify its work on your desktop. Open source, 100% local, no telemetry.",
   keywords: [
-    "MCP",
+    "MCP server",
+    "desktop MCP server",
     "Model Context Protocol",
     "Claude Code",
     "desktop automation",
     "AI agent",
     "screen control",
+    "MCP tools",
     "open source",
     "macOS",
     "Windows",
+    "desktop control",
+    "AI verification",
   ],
   authors: [{ name: "Dragos Strugar", url: "https://dragosstrugar.com" }],
   creator: "Dragos Strugar",
@@ -36,15 +40,15 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://getservo.app",
     siteName: "Servo",
-    title: "Servo - Give AI the ability to see and control your desktop",
+    title: "Servo - Desktop MCP Server for AI Agents",
     description:
-      "An MCP server that lets Claude Code take screenshots, click buttons, type text, and verify its work. 100% local, open source, no telemetry.",
+      "A desktop MCP server that gives Claude Code tools to take screenshots, click buttons, and verify its work. Open source, 100% local, no telemetry.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Servo - Give AI the ability to see and control your desktop",
+    title: "Servo - Desktop MCP Server for AI Agents",
     description:
-      "An MCP server that lets Claude Code take screenshots, click buttons, type text, and verify its work. 100% local, open source, no telemetry.",
+      "A desktop MCP server that gives Claude Code tools to take screenshots, click buttons, and verify its work. Open source, 100% local, no telemetry.",
   },
   robots: {
     index: true,

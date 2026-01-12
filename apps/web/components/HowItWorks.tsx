@@ -20,14 +20,17 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section className="px-6 py-16">
+    <section className="px-6 pt-10 pb-16">
       <div className="mx-auto max-w-5xl">
+        {/* Divider */}
+        <div className="mx-auto mb-6 h-px w-24 bg-foreground/10" />
+
         <h2 className="text-center text-2xl font-bold tracking-tight sm:text-3xl">
           Get started in minutes
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-center text-base text-muted">
-          Three simple steps to give Claude Code the ability to see and control
-          your desktop.
+          Three simple steps to let Claude Code verify its changes on your
+          actual desktop.
         </p>
         <div className="mt-10 grid gap-6 sm:grid-cols-3">
           {steps.map((item) => (

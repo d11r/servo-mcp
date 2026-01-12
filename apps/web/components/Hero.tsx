@@ -5,7 +5,9 @@ export function Hero() {
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pt-16 text-center">
       {/* Subtle gradient background */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-accent/5 via-transparent to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-accent/8 via-accent/3 to-transparent" />
+      {/* Radial glow behind headline */}
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/5 blur-3xl" />
 
       <div className="relative mx-auto max-w-3xl">
         {/* Badge */}
@@ -14,17 +16,17 @@ export function Hero() {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
           </span>
-          Open source & 100% local
+          MCP Server • macOS & Windows
         </div>
 
         {/* Headline with gradient */}
-        <h1 className="bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl md:text-6xl">
-          Give AI the ability to see and control your desktop
+        <h1 className="bg-gradient-to-b from-foreground via-foreground to-foreground/60 bg-clip-text pb-1 pt-1 text-4xl font-bold leading-tight tracking-tight text-transparent drop-shadow-sm sm:text-5xl md:text-6xl md:leading-tight">
+          A desktop MCP server<br className="hidden sm:inline" /> for AI agents
         </h1>
 
         <p className="mx-auto mt-6 max-w-2xl text-base text-muted sm:text-lg">
-          Servo is an MCP server that lets Claude Code take screenshots, click
-          buttons, type text, and verify its work. No cloud. No telemetry. Just local AI power.
+          Servo gives Claude Code the tools to see your screen, click buttons, type text, and verify
+          its changes actually work. A desktop MCP server for macOS and Windows. No cloud. No telemetry.
         </p>
 
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
