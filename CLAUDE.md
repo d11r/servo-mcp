@@ -69,14 +69,14 @@ Electron app that runs in two modes:
 **Tech stack:**
 - Electron 28+ with electron-vite
 - electron-updater for auto-updates
-- @nut-tree/nut-js for cross-platform automation
+- Native platform APIs (no external automation dependencies)
 - @modelcontextprotocol/sdk for MCP protocol
 
 **Key directories:**
-- `src/main/` - Electron main process (window, tray, permissions)
+- `src/main/` - Electron main process (window, tray, permissions, ipc)
 - `src/renderer/` - React UI for status/permissions
 - `src/mcp/` - MCP server and tool implementations
-- `src/mcp/platform/` - macOS and Windows specific code
+- `src/mcp/automation/` - Platform-specific automation (macOS, Windows)
 
 ### MCP Tools
 
@@ -108,6 +108,23 @@ Add to `~/.claude.json`:
 }
 ```
 
+### Automation Architecture
+
+The automation layer uses **native platform APIs only** (no external dependencies like nut-js or robotjs):
+
+**macOS (`src/mcp/automation/macos.ts`):**
+- Screenshots: `screencapture` CLI (built-in)
+- Mouse/keyboard: Python + Quartz CGEventPost (built-in)
+- Window management: AppleScript via `osascript`
+
+**Windows (`src/mcp/automation/windows.ts`):**
+- Screenshots: .NET System.Drawing via PowerShell
+- Mouse/keyboard: user32.dll via PowerShell
+- Window management: PowerShell + Win32 APIs
+
+**Interface (`src/mcp/automation/types.ts`):**
+Defines `PlatformAutomation` interface that both platforms implement.
+
 ### Why a Desktop App?
 
 macOS requires explicit user permission for:
@@ -122,7 +139,7 @@ A proper app bundle appears in System Preferences, allowing users to grant these
 
 ## Phases
 
-### Phase 1: Monorepo Setup
+### Phase 1: Monorepo Setup ✅ COMPLETE
 1. Move current Next.js app to `apps/web/`
 2. Create `pnpm-workspace.yaml`, `turbo.json`, `tsconfig.base.json`
 3. Create `packages/shared/` with types
@@ -134,21 +151,21 @@ A proper app bundle appears in System Preferences, allowing users to grant these
 7. Update styling and branding
 8. Add author credit (d11r / Dragos Strugar)
 
-### Phase 3: Desktop App Foundation
+### Phase 3: Desktop App Foundation ✅ COMPLETE
 9. Initialize Electron app in `apps/desktop/`
 10. Set up electron-vite build config
 11. Create main window and system tray
 12. Implement permission checking (macOS)
 13. Create permission request UI
 
-### Phase 4: MCP Server Implementation
+### Phase 4: MCP Server Implementation ✅ COMPLETE
 14. Set up MCP SDK with stdio transport
 15. Implement core tools: `screenshot`, `click`, `type_text`, `key_press`, `scroll`, `move_mouse`, `get_mouse_position`
 16. Implement app tools: `focus_app`, `open_app`, `list_windows`, `wait`
 
-### Phase 5: Platform Implementation
-17. macOS automation (screencapture, Accessibility API)
-18. Windows automation (Win32 APIs / robotjs)
+### Phase 5: Platform Implementation ✅ COMPLETE
+17. macOS automation (screencapture, Python+Quartz, AppleScript)
+18. Windows automation (PowerShell, user32.dll, .NET)
 
 ### Phase 6: Build & Release
 19. Configure electron-builder for both platforms
