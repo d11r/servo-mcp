@@ -59,25 +59,33 @@ export async function runSetup(): Promise<void> {
   console.log('')
 
   if (platform === 'darwin') {
-    console.log('Next steps:')
-    console.log('')
-    console.log('1. Grant permissions in System Settings > Privacy & Security:')
-    console.log('   - Accessibility (required for clicking/typing)')
-    console.log('   - Screen Recording (required for screenshots)')
-    console.log('')
-    console.log('2. Restart Claude Code')
-    console.log('')
-    console.log('3. Test with: "take a screenshot"')
+    console.log('Opening System Settings for permissions...')
     console.log('')
 
-    // Open System Preferences to Accessibility pane
+    // Open both permission panes - Screen Recording first, then Accessibility
     try {
+      // Open Screen Recording pane
+      execSync('open "x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture"', {
+        stdio: 'ignore'
+      })
+
+      // Wait a moment, then open Accessibility pane (will open in new window or tab)
+      await new Promise(resolve => setTimeout(resolve, 500))
+
       execSync('open "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"', {
         stdio: 'ignore'
       })
     } catch {
       // Ignore errors opening System Preferences
     }
+
+    console.log('Please enable Servo in both:')
+    console.log('')
+    console.log('  1. \x1b[1mAccessibility\x1b[0m - allows clicking and typing')
+    console.log('  2. \x1b[1mScreen Recording\x1b[0m - allows screenshots')
+    console.log('')
+    console.log('Then restart Claude Code and test with: "take a screenshot"')
+    console.log('')
   } else if (platform === 'win32') {
     console.log('Next steps:')
     console.log('')
