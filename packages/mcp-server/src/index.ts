@@ -6,8 +6,20 @@
  */
 
 import { startMcpServer } from './server.js'
+import { runSetup } from './setup.js'
 
-startMcpServer().catch((error) => {
-  console.error('Failed to start MCP server:', error)
-  process.exit(1)
-})
+// Handle --setup flag (configures Claude Code)
+if (process.argv.includes('--setup')) {
+  runSetup()
+    .then(() => process.exit(0))
+    .catch((error) => {
+      console.error('Setup failed:', error)
+      process.exit(1)
+    })
+} else {
+  // Normal MCP server startup
+  startMcpServer().catch((error) => {
+    console.error('Failed to start MCP server:', error)
+    process.exit(1)
+  })
+}
