@@ -16,7 +16,7 @@ npx servo-mcp --setup
 
 Grant permissions to your **terminal app** (Terminal, iTerm, VS Code, Cursor) in **System Settings > Privacy & Security**:
 
-- **Accessibility** - for mouse clicks and keyboard input
+- **Accessibility** - for mouse clicks, keyboard input, and UI element access
 - **Screen Recording** - for taking screenshots
 
 Child processes like servo-mcp inherit permissions from the parent terminal app.
@@ -33,9 +33,21 @@ Servo is an [MCP (Model Context Protocol)](https://modelcontextprotocol.io) serv
 - Click buttons and interact with UI elements
 - Type text and press keyboard shortcuts
 - Scroll and navigate applications
+- **Access UI elements via accessibility APIs** (faster than vision)
 - Verify that code changes actually work
 
+## Architecture
+
+Servo uses **native pre-built binaries** for maximum performance and zero runtime dependencies:
+
+- **macOS**: Swift binary using CoreGraphics and Accessibility APIs
+- **Windows**: C# binary using Win32 and UI Automation APIs
+
+No Python, no PowerShell, no interpreters at runtime. Just fast, native code.
+
 ## Available Tools
+
+### Coordinate-based tools
 
 | Tool | Description |
 |------|-------------|
@@ -52,6 +64,17 @@ Servo is an [MCP (Model Context Protocol)](https://modelcontextprotocol.io) serv
 | `wait` | Wait milliseconds |
 | `request_permissions` | Open System Preferences |
 
+### Accessibility-based tools (NEW in v0.4.0)
+
+| Tool | Description |
+|------|-------------|
+| `list_ui_elements` | Get UI elements with labels, roles, and bounds |
+| `click_element` | Click element by title/role/identifier (no coordinates needed) |
+| `get_element_text` | Read text content from an element |
+| `focus_element` | Focus an element like a text field |
+
+**Accessibility tools are faster and more reliable** than screenshot + vision for UI automation. Instead of analyzing images to find buttons, Claude can directly query the accessibility tree and click elements by name.
+
 ## Configuration
 
 After running `npx servo-mcp --setup`, your `~/.claude.json` will contain:
@@ -67,7 +90,7 @@ After running `npx servo-mcp --setup`, your `~/.claude.json` will contain:
 }
 ```
 
-Restart Claude Code and test with: "take a screenshot"
+Restart Claude Code and test with: "take a screenshot" or "list the UI elements"
 
 ## Links
 

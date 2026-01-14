@@ -44,7 +44,7 @@ const CONFIG_CODE = `{
   }
 }`;
 
-const tools = [
+const coordinateTools = [
   { name: "screenshot", desc: "Capture screen" },
   { name: "click", desc: "Click at x,y" },
   { name: "type_text", desc: "Type text" },
@@ -54,6 +54,13 @@ const tools = [
   { name: "focus_app", desc: "Focus window" },
   { name: "open_app", desc: "Launch app" },
   { name: "list_windows", desc: "List windows" },
+];
+
+const accessibilityTools = [
+  { name: "list_ui_elements", desc: "Get UI elements" },
+  { name: "click_element", desc: "Click by name" },
+  { name: "get_element_text", desc: "Read element text" },
+  { name: "focus_element", desc: "Focus input field" },
 ];
 
 export default function Home() {
@@ -98,7 +105,7 @@ export default function Home() {
           </h1>
           <p className="mt-3 text-muted max-w-xl mx-auto">
             Give Claude Code the ability to see your screen, click buttons, and verify its work.
-            macOS & Windows. 100% local.
+            macOS & Windows. 100% local. Native binaries for speed.
           </p>
         </section>
 
@@ -113,6 +120,25 @@ export default function Home() {
           </p>
         </section>
 
+        {/* Architecture highlight */}
+        <section className="py-8 border-t border-foreground/10">
+          <h2 className="text-lg font-semibold mb-3">Native Performance</h2>
+          <p className="text-sm text-muted mb-3">
+            Servo uses <strong className="text-foreground">pre-built native binaries</strong> — Swift on macOS, C# on Windows.
+            No Python, no PowerShell, no interpreters. Just fast, reliable automation.
+          </p>
+          <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="bg-foreground/5 rounded-lg p-3">
+              <p className="font-medium mb-1">macOS</p>
+              <p className="text-xs text-muted">Swift + CoreGraphics + Accessibility APIs</p>
+            </div>
+            <div className="bg-foreground/5 rounded-lg p-3">
+              <p className="font-medium mb-1">Windows</p>
+              <p className="text-xs text-muted">C# + Win32 + UI Automation</p>
+            </div>
+          </div>
+        </section>
+
         {/* Verify Setup */}
         <section className="py-8 border-t border-foreground/10">
           <h2 className="text-lg font-semibold mb-3">Verify Setup</h2>
@@ -120,7 +146,7 @@ export default function Home() {
             After restarting Claude Code, run <code className="bg-foreground/10 px-1.5 py-0.5 rounded">/mcp</code> to see the list of connected MCP servers.
           </p>
           <p className="text-sm text-muted mb-3">
-            You should see <strong className="text-foreground">servo</strong> in the list. Try: <em>&quot;take a screenshot&quot;</em>
+            You should see <strong className="text-foreground">servo</strong> in the list. Try: <em>&quot;take a screenshot&quot;</em> or <em>&quot;list the UI elements&quot;</em>
           </p>
         </section>
 
@@ -132,7 +158,7 @@ export default function Home() {
             <strong className="text-foreground">System Settings → Privacy & Security</strong>:
           </p>
           <ul className="text-sm text-muted space-y-1 ml-4">
-            <li>• <strong className="text-foreground">Accessibility</strong> — clicking, typing</li>
+            <li>• <strong className="text-foreground">Accessibility</strong> — clicking, typing, UI elements</li>
             <li>• <strong className="text-foreground">Screen Recording</strong> — screenshots</li>
           </ul>
           <p className="text-xs text-muted mt-2">
@@ -198,13 +224,34 @@ export default function Home() {
         {/* Tools */}
         <section className="py-8 border-t border-foreground/10">
           <h2 className="text-lg font-semibold mb-3">Available Tools</h2>
-          <div className="grid grid-cols-3 gap-2 text-sm">
-            {tools.map((tool) => (
-              <div key={tool.name} className="flex items-baseline gap-2">
-                <code className="text-xs bg-foreground/5 px-1.5 py-0.5 rounded">{tool.name}</code>
-                <span className="text-muted text-xs">{tool.desc}</span>
+
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-sm font-medium mb-2 text-muted">Coordinate-based</h3>
+              <div className="grid grid-cols-3 gap-2 text-sm">
+                {coordinateTools.map((tool) => (
+                  <div key={tool.name} className="flex items-baseline gap-2">
+                    <code className="text-xs bg-foreground/5 px-1.5 py-0.5 rounded">{tool.name}</code>
+                    <span className="text-muted text-xs">{tool.desc}</span>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium mb-2 text-green-400">Accessibility-based (NEW)</h3>
+              <div className="grid grid-cols-2 gap-2 text-sm">
+                {accessibilityTools.map((tool) => (
+                  <div key={tool.name} className="flex items-baseline gap-2">
+                    <code className="text-xs bg-green-400/10 text-green-400 px-1.5 py-0.5 rounded">{tool.name}</code>
+                    <span className="text-muted text-xs">{tool.desc}</span>
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs text-muted mt-2">
+                Click buttons by name instead of coordinates. Faster and more reliable than vision.
+              </p>
+            </div>
           </div>
         </section>
 
