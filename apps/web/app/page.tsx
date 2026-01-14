@@ -70,14 +70,24 @@ export default function Home() {
       {/* Header */}
       <header className="flex items-center justify-between px-6 py-4 max-w-4xl mx-auto">
         <span className="font-semibold">servo-mcp</span>
-        <a
-          href={GITHUB_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sm text-muted hover:text-foreground transition-colors"
-        >
-          GitHub
-        </a>
+        <div className="flex items-center gap-4">
+          <a
+            href="https://www.npmjs.com/package/servo-mcp"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-muted hover:text-foreground transition-colors"
+          >
+            npm
+          </a>
+          <a
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-muted hover:text-foreground transition-colors"
+          >
+            GitHub
+          </a>
+        </div>
       </header>
 
       <main className="px-6 pb-16 max-w-4xl mx-auto">
